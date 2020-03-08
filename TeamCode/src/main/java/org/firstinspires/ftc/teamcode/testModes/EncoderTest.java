@@ -64,7 +64,7 @@ public class EncoderTest extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        drive  = hardwareMap.get(DcMotor.class, "drive");
+        drive = hardwareMap.get(DcMotor.class, "drive");
         drive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
