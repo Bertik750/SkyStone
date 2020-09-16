@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.testModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -75,7 +75,7 @@ public class EncoderTest extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            long ep = drive.getCurrentPosition();
+            double ep = drive.getCurrentPosition();
 
             double power = Range.clip(gamepad1.left_stick_y, -1.0, 1.0) ;
 
@@ -84,7 +84,7 @@ public class EncoderTest extends LinearOpMode {
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "Encoder value: (%d)", ep);
+            telemetry.addData("Motors", "Encoder value: ", ep);
             telemetry.update();
         }
     }

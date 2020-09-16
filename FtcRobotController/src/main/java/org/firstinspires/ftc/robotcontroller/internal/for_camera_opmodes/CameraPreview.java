@@ -69,9 +69,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // The Surface has been created, now tell the camera where to draw the preview.
         try {
             Camera.Parameters parameters = mCamera.getParameters();
-   //         mCamera.setDisplayOrientation(90);
-            setCameraDisplayOrientation(((Activity) this.getContext()), Camera.CameraInfo.CAMERA_FACING_FRONT, mCamera);
-
+            setCameraDisplayOrientation(((Activity) this.getContext()), Camera.CameraInfo.CAMERA_FACING_BACK, mCamera);
+            int maxZoom = parameters.getMaxZoom();
+            parameters.setZoom(maxZoom/3);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             mCamera.setParameters(parameters);
 
             mCamera.setPreviewCallback(previewCallback);
@@ -108,7 +109,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // start preview with new settings
         try {
             Camera.Parameters parameters = mCamera.getParameters();
-            setCameraDisplayOrientation(((Activity) this.getContext()), Camera.CameraInfo.CAMERA_FACING_FRONT, mCamera);
+            setCameraDisplayOrientation(((Activity) this.getContext()), Camera.CameraInfo.CAMERA_FACING_BACK, mCamera);
             mCamera.setParameters(parameters);
 
             mCamera.setPreviewCallback(previewCallback);

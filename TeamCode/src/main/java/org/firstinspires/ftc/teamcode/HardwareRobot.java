@@ -29,10 +29,16 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
  * This is NOT an opmode.
@@ -53,14 +59,36 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class HardwareRobot
 {
     /* Public OpMode members. */
-    public DcMotor  leftFront   = null;
-    public DcMotor  rightFront  = null;
-    public DcMotor  leftBack  = null;
+    public DcMotor  leftFront  = null;
+    public DcMotor  rightFront = null;
+    public DcMotor  leftBack   = null;
     public DcMotor  rightBack  = null;
+    public DcMotor  lift       = null;
+    public DcMotor  baseTurn   = null;
+    public DcMotor  leftIntake = null;
+    public DcMotor  rightIntake= null;
+
+    public Servo autoArmDown = null;
+    public Servo autoArmUp   = null;
+    public Servo backRight = null;
+    public Servo backLeft   = null;
+
+    public Servo dipper = null;
+    public Servo picker   = null;
+
+    public CRServo pick1 = null;
+    public CRServo pick2   = null;
+
+    public DistanceSensor sensorRange;
+    public DistanceSensor sensorFront;
+
+    public BNO055IMU imu;
+
+    // State used for updating telemetry
+    public Orientation angles;
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap =  null;
 
     /* Constructor */
     public HardwareRobot(){
@@ -70,7 +98,26 @@ public class HardwareRobot
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled      = true;
+        parameters.loggingTag          = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
         hwMap = ahwMap;
+
+        //Servos
+        autoArmDown = hwMap.get(Servo.class, "autoArmDown");
+        autoArmUp = hwMap.get(Servo.class, "autoArmUp");
+        backRight = hwMap.get(Servo.class, "backRight");
+        backLeft = hwMap.get(Servo.class, "backLeft");
+        dipper = hwMap.get(Servo.class, "dipper");
+        picker = hwMap.get(Servo.class, "picker");
+        //CRSERVO
+        pick1 = hwMap.get(CRServo.class, "pick1");
+        pick2 = hwMap.get(CRServo.class, "pick2");
 
         // Define and Initialize Motors
         leftFront  = hwMap.get(DcMotor.class, "left_front");
@@ -83,6 +130,17 @@ public class HardwareRobot
         leftBack.setDirection(DcMotor.Direction.FORWARD);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
 
+        baseTurn = hwMap.get(DcMotor.class, "base_turn");
+        baseTurn.setDirection(DcMotor.Direction.REVERSE);
+        lift = hwMap.get(DcMotor.class, "lift");
+        leftIntake = hwMap.get(DcMotor.class, "leftIntake");
+        rightIntake = hwMap.get(DcMotor.class, "rightIntake");
+
+        //sensors
+        sensorRange = hwMap.get(DistanceSensor.class, "block_distance");
+        sensorFront = hwMap.get(DistanceSensor.class, "front_distance");
+        imu = hwMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
 
         // Set all motors to zero power
         leftFront.setPower(0);
@@ -90,12 +148,20 @@ public class HardwareRobot
         leftBack.setPower(0);
         rightBack.setPower(0);
 
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftBack.setMode(DcMotor.RunMode. RUN_WITHOUT_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
     }
  }

@@ -32,7 +32,9 @@ package org.firstinspires.ftc.teamcode.testModes;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -50,9 +52,10 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @TeleOp(name = "Servo test", group = "Concept")
-public class ConceptScanServo extends LinearOpMode {
+public class ServoTest extends LinearOpMode {
 
-    public Servo test = null;
+    public CRServo test = null;
+    private ElapsedTime runtime = new ElapsedTime();
 
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   50;     // period of each cycle
@@ -70,7 +73,7 @@ public class ConceptScanServo extends LinearOpMode {
 
         // Connect to servo (Assume PushBot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
-        test = hardwareMap.get(Servo.class, "test");
+        test = hardwareMap.get(CRServo.class, "test");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to scan Servo." );
@@ -80,10 +83,18 @@ public class ConceptScanServo extends LinearOpMode {
         // Scan servo till stop pressed.
         while(opModeIsActive()){
 
-            double deafultPos = 0.75;
+            /*double deafultPos = 0.75;
             if(gamepad1.x) {
                 test.setPosition(deafultPos);
+            }*/
+
+            if(gamepad1.dpad_up) {
+                extend(5.3);
             }
+            if(gamepad1.dpad_down) {
+                retract(5.3);
+            }
+
 
         }
 
@@ -91,4 +102,16 @@ public class ConceptScanServo extends LinearOpMode {
         telemetry.addData(">", "pso");
         telemetry.update();
     }
+
+    private void extend(double secs) {
+        test.setPower(1);
+        sleep((int)secs*1000);
+        test.setPower(0);
+    }
+    private void retract(double secs) {
+        test.setPower(-1);
+        sleep((int)secs*1000);
+        test.setPower(0);
+    }
+
 }

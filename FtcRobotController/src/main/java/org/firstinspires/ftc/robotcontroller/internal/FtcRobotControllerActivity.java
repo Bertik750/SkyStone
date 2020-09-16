@@ -54,6 +54,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -122,6 +123,14 @@ import org.firstinspires.inspection.RcInspectionActivity;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.firstinspires.ftc.robotcontroller.internal.for_camera_opmodes.LinearOpModeCamera;
+import org.firstinspires.ftc.robotcontroller.internal.for_camera_opmodes.OpModeCamera;
+import org.firstinspires.ftc.robotcontroller.internal.for_camera_opmodes.CameraPreview;
+
+import android.hardware.Camera;
+
+
+
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity
   {
@@ -169,6 +178,50 @@ public class FtcRobotControllerActivity extends Activity
   private static boolean permissionsValidated = false;
 
   private WifiDirectChannelChanger wifiDirectChannelChanger;
+
+    public void initPreview(final Camera camera, final OpModeCamera context, final Camera.PreviewCallback previewCallback) {
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          context.preview = new CameraPreview(FtcRobotControllerActivity.this, camera, previewCallback);
+          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
+          previewLayout.addView(context.preview);
+        }
+      });
+    }
+
+    // poor coding style here.  Shouldn't have to duplicate these routines for regular and linear OpModes.
+    public void initPreviewLinear(final Camera camera, final LinearOpModeCamera context, final Camera.PreviewCallback previewCallback) {
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          context.preview = new CameraPreview(FtcRobotControllerActivity.this, camera, previewCallback);
+          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
+          previewLayout.addView(context.preview);
+        }
+      });
+    }
+
+
+    public void removePreview(final OpModeCamera context) {
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
+          previewLayout.removeAllViews();
+        }
+      });
+    }
+
+    public void removePreviewLinear(final LinearOpModeCamera context) {
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
+          previewLayout.removeAllViews();
+        }
+      });
+    }
 
   protected class RobotRestarter implements Restarter {
 

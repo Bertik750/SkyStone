@@ -71,8 +71,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autonomous: Master")
-public class AutonomousMaster extends LinearOpModeCamera {
+@Autonomous(name="Autonomous: Blue")
+public class AutonomousMasterBlue extends LinearOpModeCamera {
 
     /* Declare OpMode members. */
     HardwareRobot robot = new HardwareRobot();
@@ -109,11 +109,14 @@ public class AutonomousMaster extends LinearOpModeCamera {
             robot.leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            robot.autoArmDown.setPosition(0.4);
+            robot.autoArmDown.setPosition(0.65);
             robot.autoArmUp.setPosition(0.7);
 
             robot.backLeft.setPosition(0.5);
             robot.backRight.setPosition(0.5);
+
+            robot.dipper.setPosition(0.2);
+            robot.picker.setPosition(0.7);
 
             // Wait for the game to start (driver presses PLAY)
             waitForStart();
@@ -132,86 +135,160 @@ public class AutonomousMaster extends LinearOpModeCamera {
             telemetry.addData("Place:", finalPos);
             telemetry.update();
 
-            if(finalPos == 0) {
-                DiagonalDrive(-0.425, 1, 150, 1800);
+            if(finalPos == 2) {
+                DiagonalDrive(-1, 0.478, 135, 1800);
                 robot.autoArmDown.setPosition(0);
-                sleep(350);
+                sleep(450);
                 robot.autoArmUp.setPosition(0);
-                sleep(400);
-                robot.autoArmDown.setPosition(0.7);
+                sleep(500);
+                robot.autoArmDown.setPosition(0.65);
                 sleep(300);
 
-                DiagonalDrive(1, -1, 0, 205);
-                calibrateAngle(0.2, -0.2);                  //ANGLE
+                DiagonalDrive(1, -1, 0, 225);
+                calibrateAngle(0.2, -0.1);                  //ANGLE
                 resetEncoders();
-                straightDrive(1,175,8);
+                straightDrive(1,-175,8);
                 calibrateAngle(0.2, 0);                    //ANGLE
-                DiagonalDrive(-1, 1, 0, 235);
+                DiagonalDrive(-1, 1, 0, 250);
 
                 robot.autoArmDown.setPosition(0.2);
                 sleep(200);
                 robot.autoArmUp.setPosition(0.6);
                 sleep(200);
                 robot.autoArmDown.setPosition(0.6);
-                DiagonalDrive(1, -1, 0, 220);
-                calibrateAngle(0.2, -0.2);                  //ANGLE
+                DiagonalDrive(1, -1, 0, 245);
+                calibrateAngle(0.2, 0);                  //ANGLE
 
                 resetEncoders();
-                straightDrive(1,-238,7);
+                straightDrive(1,240,7);
 
                 DiagonalDrive(-0.75, 0.75, 125, 2000);
                 sleep(100);
                 robot.autoArmDown.setPosition(0);
-                sleep(350);
+                sleep(450);
                 robot.autoArmUp.setPosition(0);
                 sleep(400);
                 robot.autoArmDown.setPosition(0.8);
                 sleep(350);
 
-                DiagonalDrive(1, -1, 0, 175);
-                calibrateAngle(0.2, -0.3);                 //ANGLE
+                DiagonalDrive(1, -1, 0, 225);
+                calibrateAngle(0.2, -0.1);                 //ANGLE
                 resetEncoders();
-                straightDrive(1,230,6);
+                straightDrive(1,-230,6);
                 calibrateAngle(0.2, 0);                    //ANGLE
 
-                DiagonalDrive(-1, 1, 0, 245);
+                DiagonalDrive(-1, 1, 0, 260);
                 robot.autoArmDown.setPosition(0.1);
                 sleep(150);
                 robot.autoArmUp.setPosition(0.6);
                 sleep(250);
                 robot.autoArmDown.setPosition(0.6);
-                sideDrive(0.8, 10, "L", 250);
-                calibrateAngle(0.3, -90);
-                straightDrive(0.8, -20, 2);
-                robot.backLeft.setPosition(0);
-                sleep(250);
-                robot.backRight.setPosition(1);
-                sleep(250);
-                straightDrive(1, 35, 2);
+                DiagonalDrive(1, -1, 0, 220);
+                straightDrive(0.7,80,6);
             }
             else if(finalPos == 1) {
-                DiagonalDrive(-0.85, 1, 160, 1750);
+                DiagonalDrive(-0.8, 0.7, 120, 1700);
                 robot.autoArmDown.setPosition(0);
-                sleep(350);
+                sleep(450);
                 robot.autoArmUp.setPosition(0);
-                sleep(400);
-                robot.autoArmDown.setPosition(0.7);
+                sleep(500);
+                robot.autoArmDown.setPosition(0.65);
                 sleep(300);
 
-                DiagonalDrive(1, -1, 0, 205);
+                DiagonalDrive(1, -1, 0, 225);
                 calibrateAngle(0.2, -0.1);                  //ANGLE
                 resetEncoders();
-                straightDrive(1,195,8);
+                straightDrive(1,-210,7);
                 calibrateAngle(0.2, 0);                    //ANGLE
-                DiagonalDrive(-1, 1, 0, 235);
+                DiagonalDrive(-1, 1, 0, 255);
 
                 robot.autoArmDown.setPosition(0.2);
                 sleep(200);
                 robot.autoArmUp.setPosition(0.6);
                 sleep(200);
                 robot.autoArmDown.setPosition(0.6);
-                sleep(500);
+                DiagonalDrive(1, -1, 0, 250);
+                calibrateAngle(0.2, 0.1);                  //ANGLE
 
+                resetEncoders();
+                straightDrive(1,275,7);
+
+                DiagonalDrive(-0.75, 0.75, 120, 2000);
+                sleep(100);
+                robot.autoArmDown.setPosition(0);
+                sleep(450);
+                robot.autoArmUp.setPosition(0);
+                sleep(450);
+                robot.autoArmDown.setPosition(0.8);
+                sleep(350);
+
+                DiagonalDrive(1, -1, 0, 225);
+                calibrateAngle(0.2, 0.1);                 //ANGLE
+                resetEncoders();
+                straightDrive(1,-250,6);
+                calibrateAngle(0.2, 0);                    //ANGLE
+
+                DiagonalDrive(-1, 1, 0, 250);
+                robot.autoArmDown.setPosition(0.1);
+                sleep(150);
+                robot.autoArmUp.setPosition(0.6);
+                sleep(250);
+                robot.autoArmDown.setPosition(0.6);
+                DiagonalDrive(1, -1, 0, 185);
+                straightDrive(0.7,80,6);
+
+
+            }
+            else if(finalPos == 0) {
+                DiagonalDrive(-0.80, 1, 150, 1700);
+                robot.autoArmDown.setPosition(0);
+                sleep(400);
+                robot.autoArmUp.setPosition(0);
+                sleep(500);
+                robot.autoArmDown.setPosition(0.65);
+                sleep(300);
+
+                DiagonalDrive(1, -1, 0, 225);
+                calibrateAngle(0.2, 0.1);                  //ANGLE
+                resetEncoders();
+                straightDrive(1,-230,8);
+                calibrateAngle(0.2, 0);                    //ANGLE
+                DiagonalDrive(-1, 1, 0, 245);
+
+                robot.autoArmDown.setPosition(0.2);
+                sleep(200);
+                robot.autoArmUp.setPosition(0.6);
+                sleep(200);
+                robot.autoArmDown.setPosition(0.6);
+                DiagonalDrive(1, -1, 0, 240);
+                calibrateAngle(0.2, 0.1);                  //ANGLE
+
+                resetEncoders();
+                straightDrive(1,275,8);
+
+                DiagonalDrive(-0.75, 0.75, 120, 2000);
+                sleep(100);
+                robot.autoArmDown.setPosition(0);
+                sleep(400);
+                robot.autoArmUp.setPosition(0);
+                sleep(450);
+                robot.autoArmDown.setPosition(0.8);
+                sleep(350);
+
+                DiagonalDrive(1, -1, 0, 225);
+                calibrateAngle(0.2, 0);                 //ANGLE
+                resetEncoders();
+                straightDrive(1,-275,6);
+                calibrateAngle(0.2, 0);                    //ANGLE
+
+                DiagonalDrive(-1, 1, 0, 265);
+                robot.autoArmDown.setPosition(0.1);
+                sleep(150);
+                robot.autoArmUp.setPosition(0.6);
+                sleep(250);
+                robot.autoArmDown.setPosition(0.6);
+                DiagonalDrive(1, -1, 0, 225);
+                straightDrive(0.7,100,6);
             }
 
 
@@ -386,6 +463,39 @@ public class AutonomousMaster extends LinearOpModeCamera {
         robot.leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+    }
+
+    private void frontDrive(double power, double sensorMM, int timeoutMili) {
+        robot.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //Sets power according to group
+        robot.leftFront.setPower(-power);
+        robot.rightBack.setPower(-power);
+        robot.rightFront.setPower(-power);
+        robot.leftBack.setPower(-power);
+        runtime.reset();
+
+        //loop until the range is reached or runtime runs out
+        while (opModeIsActive() &&
+                //The range sensor on the robot is not straight; therefore, using trigonometry
+                //the value has to be adjusted
+                (robot.sensorFront.getDistance(DistanceUnit.MM) > sensorMM) &&
+                runtime.milliseconds() < timeoutMili) {
+
+        }
+        //stop robot
+        robot.rightFront.setPower(0);
+        robot.leftBack.setPower(0);
+        robot.leftFront.setPower(0);
+        robot.rightBack.setPower(0);
+
+        robot.leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     private void sideDrive(double power, double x, String side, double timeoutMili) {

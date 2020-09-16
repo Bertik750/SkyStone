@@ -87,7 +87,7 @@ public class OpModeCamera extends OpMode {
     for (int i = 0; i < numberOfCameras; i++) {
       Camera.CameraInfo info = new Camera.CameraInfo();
       Camera.getCameraInfo(i, info);
-      if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) { // Camera.CameraInfo.CAMERA_FACING_FRONT or BACK
+      if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) { // Camera.CameraInfo.CAMERA_FACING_FRONT or BACK
         cameraId = i;
         break;
       }
@@ -126,7 +126,7 @@ public class OpModeCamera extends OpMode {
   }
 
   public void startCamera() {
-    camera = openCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
+    camera = openCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
 
     camera.setPreviewCallback(previewCallback);
 
@@ -201,7 +201,7 @@ public class OpModeCamera extends OpMode {
     // get image and rotate it so (0,0) is in the bottom left
     Bitmap tmpImage;
     Matrix matrix = new Matrix();
-    matrix.postRotate(90); // to rotate the camera images so (0,0) is in the bottom left
+    matrix.postRotate(180); // to rotate the camera images so (0,0) is in the bottom left
     tmpImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length, opt);
     rgbImage=Bitmap.createBitmap(tmpImage , 0, 0, tmpImage.getWidth(), tmpImage.getHeight(), matrix, true);
 
